@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
 	<head>
@@ -6,7 +8,10 @@
 	</head>
 
 	<body>
-		This is the index view jsp
+		Welcome!
+		<br>
+		Which program would you like to run?
+		<br>
 		<form action="${pageContext.servletContext.contextPath}/Index" method="post">
 			<table>
 				<tr>
