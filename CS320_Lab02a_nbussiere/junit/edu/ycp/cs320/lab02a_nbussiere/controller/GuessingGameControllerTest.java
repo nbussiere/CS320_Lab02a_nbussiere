@@ -1,4 +1,4 @@
-package edu.ycp.cs320.lab02.controller;
+package edu.ycp.cs320.lab02a_nbussiere.controller;
 
 import static org.junit.Assert.assertTrue;
 
