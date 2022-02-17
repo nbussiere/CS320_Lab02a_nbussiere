@@ -40,6 +40,11 @@ public class GuessingGameServlet extends HttpServlet {
 		// assign model reference to controller so that controller can access model
 		controller.setModel(model);
 		
+		if(req.getParameter("back2Index") != null) {
+			req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+		}	
+		
+		
 		// check if user is starting a new game and call controller method
 		if (req.getParameter("startGame") != null) {
 			controller.startGame();

@@ -19,6 +19,7 @@
 					</div>
 					<div>
 						<input name="startGame" type="submit" value="Play again" />
+						<input type ="submit" name="back2Index" value="Back to Index" />
 					</div>
 				</c:if>
 				<c:if test="${!game.done}">

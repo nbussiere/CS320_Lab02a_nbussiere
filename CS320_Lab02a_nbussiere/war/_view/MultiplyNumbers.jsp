@@ -37,7 +37,10 @@
 					<td>${result}</td>
 				</tr>
 			</table>
-			<input type="Submit" name="submit" value="Multiply Numbers!">
+			<div>
+				<input type="Submit" name="submit" value="Multiply Numbers!">
+				<input type ="submit" name="back2Index" value="Back to Index" />
+			</div>
 		</form>
 	</body>
 </html>

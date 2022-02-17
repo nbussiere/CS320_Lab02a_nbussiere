@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import edu.ycp.cs320.lab02a_nbussiere.controller.NumbersController;
+import edu.ycp.cs320.lab02a_nbussiere.model.Numbers;
 
 public class AddNumbersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,14 +35,30 @@ public class AddNumbersServlet extends HttpServlet {
 		// result of calculation goes here
 		Double result = null;
 		
+		// create Numbers model - model does not persist between requests
+		// must recreate it each time a Post comes in 
+		Numbers model = new Numbers();
+
+		// create Numbers controller - controller does not persist between requests
+		// must recreate it each time a Post comes in
+		NumbersController controller = new NumbersController();
+				
+		// assign model reference 
+		controller.setModel(model);
+		
+		if(req.getParameter("back2Index") != null) {
+			req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+		}	
+		
+		
 		// decode POSTed form parameters and dispatch to controller
 		try {
-			Double first = getDoubleFromParameter(req.getParameter("first"));
-			Double second = getDoubleFromParameter(req.getParameter("second"));
-			Double third = getDoubleFromParameter(req.getParameter("third"));
+			Double curUno = getDoubleFromParameter(req.getParameter("first"));
+			Double curDos = getDoubleFromParameter(req.getParameter("second"));
+			Double curTres = getDoubleFromParameter(req.getParameter("third"));
 
 			// check for errors in the form data before using is in a calculation
-			if (first == null || second == null || third == null) {
+			if (curUno == null || curDos == null || curTres == null) {
 				errorMessage = "Please specify three numbers";
 			}
 			// otherwise, data is good, do the calculation
@@ -49,21 +66,26 @@ public class AddNumbersServlet extends HttpServlet {
 			// the view does not alter data, only controller methods should be used for that
 			// thus, always call a controller method to operate on the data
 			else {
-				NumbersController controller = new NumbersController();
-				result = controller.add(first, second, third);
+				model.setUno(curUno);
+				model.setDos(curDos);
+				model.setTres(curTres);	
+				result = controller.add(model.getUno(),model.getDos(),model.getTres());
 			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
+		
+		
+		//result = controller.add(model.getUno(),model.getDos(),model.getTres());
 		
 		// Add parameters as request attributes
 		// this creates attributes named "first" and "second for the response, and grabs the
 		// values that were originally assigned to the request attributes, also named "first" and "second"
 		// they don't have to be named the same, but in this case, since we are passing them back
 		// and forth, it's a good idea
-		req.setAttribute("first", req.getParameter("first"));
-		req.setAttribute("second", req.getParameter("second"));
-		req.setAttribute("third", req.getParameter("third"));
+		//req.setAttribute("first", req.getParameter("first"));
+		//req.setAttribute("second", req.getParameter("second"));
+		//req.setAttribute("third", req.getParameter("third"));
 		
 		// add result objects as attributes
 		// this adds the errorMessage text and the result to the response
