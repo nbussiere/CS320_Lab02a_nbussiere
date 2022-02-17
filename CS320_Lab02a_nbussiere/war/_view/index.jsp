@@ -4,28 +4,16 @@
 
 <html>
 	<head>
-		<title>Index view</title>
+		<title>Index View</title>
 	</head>
 
 	<body>
-		Welcome!
-		<br>
-		Which program would you like to run?
-		<br>
-		<form action="${pageContext.servletContext.contextPath}/Index" method="post">
-			<table>
-				<tr>
-					<input type="Submit" name="submit" value="Add Numbers!">
-				</tr>
-				<tr>
-					<input type="Submit" name="submit" value="Multiply Numbers!">
-				</tr>
-			
-				<tr>
-					<input type="Submit" name="submit" value="Guessing Game!">
-				</tr>
-			</table>
-			
+		<form action="${pageContext.servletContext.contextPath}/index" method="post">
+			<div>
+				<input type="submit" name="addNum" value="Add Numbers!">
+				<input type="submit" name="multiplyNum" value="Multiply Numbers!">
+				<input type="submit" name="guessGame" value="Guessing Game!">
+			</div>
 		</form>
 	</body>
 </html>

@@ -28,7 +28,6 @@ public class AddNumbersServlet extends HttpServlet {
 		
 		System.out.println("AddNumbers Servlet: doPost");
 		
-
 		// holds the error message text, if there is any
 		String errorMessage = null;
 

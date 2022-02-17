@@ -17,5 +17,29 @@ public class IndexServlet extends HttpServlet {
 		System.out.println("Index Servlet: doGet");
 		
 		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
+		
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		
+		System.out.println("Index Servlet: doPost");
+				
+		if(req.getParameter("addNum") != null) {
+			System.out.println("Add Numbers!");
+			req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
+		}		
+		
+		if(req.getParameter("multiplyNum") != null) {
+			System.out.println("Multiply Numbers!");
+			req.getRequestDispatcher("/_view/MultiplyNumbers.jsp").forward(req, resp);
+		}	
+		
+		if(req.getParameter("guessGame") != null) {
+			System.out.println("Guessing Game");
+			req.getRequestDispatcher("/_view/guessingGame.jsp").forward(req, resp);
+		}	
+		
 	}
 }
