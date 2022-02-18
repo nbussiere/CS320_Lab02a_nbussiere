@@ -46,6 +46,20 @@ public class AddNumbersServlet extends HttpServlet {
 		// assign model reference 
 		controller.setModel(model);
 		
+		//Error value for passing back the original value entered 
+		Double errorValue = 0.0;
+		
+		//Storage of values as Strings in case of error
+		String firstEntry = req.getParameter("first");
+		String secondEntry = req.getParameter("second");
+		String thirdEntry = req.getParameter("third");
+		
+		System.out.println(firstEntry);
+		System.out.println(secondEntry);
+		System.out.println(thirdEntry);
+		
+		
+		
 		if(req.getParameter("back2Index") != null) {
 			req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 		}	
@@ -55,55 +69,63 @@ public class AddNumbersServlet extends HttpServlet {
 		try {
 			Double curUno = getDoubleFromParameter(req.getParameter("first"));
 			if (curUno == null) {
-				errorMessage = "Please enter 3 numbers";
+				errorMessage = "Please enter 3 numbers: First Number Empty";
+				errorValue = 1.0;
 			}
 			
 			else {
 				model.setUno(curUno);
 			}
 		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+			errorMessage = "Invalid double: First Entry";
+			errorValue = 1.0;
 		}
 		
 			
 		try {
 			Double curDos = getDoubleFromParameter(req.getParameter("second"));
 			if (curDos == null) {
-				errorMessage = "Please enter 3 numbers";
+				errorMessage = "Please enter 3 numbers: Second Number Empty";
+				errorValue = 2.0;
 			}
 
 			else {
 				model.setDos(curDos);
 			}
 		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+			errorMessage = "Invalid double: Second Entry";
+			errorValue = 2.0;
 		}
 		
 		try {
 			Double curTres = getDoubleFromParameter(req.getParameter("third"));
 			if (curTres == null) {
-				errorMessage = "Please enter 3 numbers";
+				errorMessage = "Please enter 3 numbers: Third Number Empty";
+				errorValue = 3.0;
 			}
 
 			else {
 			model.setTres(curTres);
 			}
 		}catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
+			errorMessage = "Invalid double: Third Entry";
+			errorValue = 3.0;
 		}
 
 		if(errorMessage == null) {
 			model.setCalcular(controller.add(model.getUno(),model.getDos(),model.getTres()));
+			req.setAttribute("errorMessage", errorMessage);
+			req.setAttribute("addNumb", model);
 		}
 		
-		//try {
-				//Double curUno = getDoubleFromParameter(req.getParameter("first"));
-				//Double curDos = getDoubleFromParameter(req.getParameter("second"));
-				//Double curTres = getDoubleFromParameter(req.getParameter("third"));
-		
-		//} catch (NumberFormatException e) {
-		//	errorMessage = "Invalid double";
-		//}
+		else {
+			req.setAttribute("errorMessage", errorMessage);
+			req.setAttribute("addNumb", model);
+			req.setAttribute("first", firstEntry);
+			req.setAttribute("second", secondEntry);
+			req.setAttribute("third", thirdEntry);
+		}
+	
 	
 		// Add parameters as request attributes
 		// this creates attributes named "first" and "second for the response, and grabs the
@@ -116,8 +138,6 @@ public class AddNumbersServlet extends HttpServlet {
 		
 		// add result objects as attributes
 		// this adds the errorMessage text and the result to the response
-		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("addNumb", model);
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/addNumbers.jsp").forward(req, resp);
