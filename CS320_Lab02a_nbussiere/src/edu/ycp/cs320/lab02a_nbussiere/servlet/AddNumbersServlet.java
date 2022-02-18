@@ -54,54 +54,42 @@ public class AddNumbersServlet extends HttpServlet {
 		// decode POSTed form parameters and dispatch to controller
 		try {
 			Double curUno = getDoubleFromParameter(req.getParameter("first"));
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
-		}
-		
-		if(errorMessage == null) {
-			Double curUno = getDoubleFromParameter(req.getParameter("first"));
 			if (curUno == null) {
-				errorMessage = "Please specify three numbers";
+				errorMessage = "Please enter 3 numbers";
 			}
 			
 			else {
 				model.setUno(curUno);
 			}
-		}
-		
-		try {
-			Double curDos = getDoubleFromParameter(req.getParameter("second"));
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
 		
-		if(errorMessage == null) {
+			
+		try {
 			Double curDos = getDoubleFromParameter(req.getParameter("second"));
 			if (curDos == null) {
-				errorMessage = "Please specify three numbers";
+				errorMessage = "Please enter 3 numbers";
 			}
 
 			else {
 				model.setDos(curDos);
 			}
-		}
-		
-		
-		try {
-			Double curTres = getDoubleFromParameter(req.getParameter("third"));
-		}catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
 		
-		if(errorMessage == null) {
+		try {
 			Double curTres = getDoubleFromParameter(req.getParameter("third"));
 			if (curTres == null) {
-				errorMessage = "Please specify three numbers";
+				errorMessage = "Please enter 3 numbers";
 			}
 
 			else {
 			model.setTres(curTres);
 			}
+		}catch (NumberFormatException e) {
+			errorMessage = "Invalid double";
 		}
 
 		if(errorMessage == null) {

@@ -56,36 +56,28 @@ public class MultiplyNumbersServlet extends HttpServlet {
 		
 		try {
 			Double curUno = getDoubleFromParameter(req.getParameter("first"));
-		} catch (NumberFormatException e) {
-			errorMessage = "Invalid double";
-		}
-		
-		if(errorMessage == null) {
-			Double curUno = getDoubleFromParameter(req.getParameter("first"));
 			if (curUno == null) {
-				errorMessage = "Please specify three numbers";
+				errorMessage = "Please enter 2 numbers";
 			}
 			
 			else {
 				model.setUno(curUno);
 			}
-		}
-		
-		try {
-			Double curDos = getDoubleFromParameter(req.getParameter("second"));
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
 		
-		if(errorMessage == null) {
+		try {
 			Double curDos = getDoubleFromParameter(req.getParameter("second"));
 			if (curDos == null) {
-				errorMessage = "Please specify three numbers";
+				errorMessage = "Please enter 2 numbers";
 			}
 
 			else {
 				model.setDos(curDos);
 			}
+		} catch (NumberFormatException e) {
+			errorMessage = "Invalid double";
 		}
 		
 		if(errorMessage == null) {
