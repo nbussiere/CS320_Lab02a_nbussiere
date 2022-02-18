@@ -34,7 +34,7 @@ public class MultiplyNumbersServlet extends HttpServlet {
 		String errorMessage = null;
 
 		// result of calculation goes here
-		Double result = null;
+		Double calcular = null;
 		
 		// create Numbers model - model does not persist between requests
 		// must recreate it each time a Post comes in 
@@ -53,26 +53,45 @@ public class MultiplyNumbersServlet extends HttpServlet {
 				
 		
 		// decode POSTed form parameters and dispatch to controller
+		
 		try {
 			Double curUno = getDoubleFromParameter(req.getParameter("first"));
-			Double curDos = getDoubleFromParameter(req.getParameter("second"));
-
-			// check for errors in the form data before using is in a calculation
-			if (curUno == null || curDos == null) {
-				errorMessage = "Please specify two numbers";
-			}
-			// otherwise, data is good, do the calculation
-			// must create the controller each time, since it doesn't persist between POSTs
-			// the view does not alter data, only controller methods should be used for that
-			// thus, always call a controller method to operate on the data
-			else {
-				model.setUno(curUno);
-				model.setDos(curDos);
-				result = controller.multiply(model.getUno(),model.getDos());
-			}
 		} catch (NumberFormatException e) {
 			errorMessage = "Invalid double";
 		}
+		
+		if(errorMessage == null) {
+			Double curUno = getDoubleFromParameter(req.getParameter("first"));
+			if (curUno == null) {
+				errorMessage = "Please specify three numbers";
+			}
+			
+			else {
+				model.setUno(curUno);
+			}
+		}
+		
+		try {
+			Double curDos = getDoubleFromParameter(req.getParameter("second"));
+		} catch (NumberFormatException e) {
+			errorMessage = "Invalid double";
+		}
+		
+		if(errorMessage == null) {
+			Double curDos = getDoubleFromParameter(req.getParameter("second"));
+			if (curDos == null) {
+				errorMessage = "Please specify three numbers";
+			}
+
+			else {
+				model.setDos(curDos);
+			}
+		}
+		
+		if(errorMessage == null) {
+			model.setCalcular(controller.multiply(model.getUno(),model.getDos()));
+		}
+		
 		
 		// Add parameters as request attributes
 		// this creates attributes named "first" and "second for the response, and grabs the
@@ -83,7 +102,7 @@ public class MultiplyNumbersServlet extends HttpServlet {
 		// add result objects as attributes
 		// this adds the errorMessage text and the result to the response
 		req.setAttribute("errorMessage", errorMessage);
-		req.setAttribute("result", result);
+		req.setAttribute("MultiplyNum", model);
 		
 		// Forward to view to render the result HTML document
 		req.getRequestDispatcher("/_view/MultiplyNumbers.jsp").forward(req, resp);
